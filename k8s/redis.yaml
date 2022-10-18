@@ -59,7 +59,6 @@ metadata:
   labels:
     app: redis
   name: redis
-  namespace: test-app
 spec:
   ports:
   - port: 6379
