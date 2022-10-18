@@ -59,7 +59,7 @@ function Guestbook({props}) {
 
 export default function Home({ data }) {
 
-
+  const version = '1.0.0'
   return (
     <div className={styles.container}>
       <Head>
@@ -71,6 +71,7 @@ export default function Home({ data }) {
         <h1 className={styles.title}>
           Welcome to my website
         </h1>
+		<br />Version: {version}
 		<Guestbook props={data}/>
       </main>
 
