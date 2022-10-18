@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-app
+  labels:
+    app: test-app
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-app
+  namespace: test-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-app
+  template:
+    metadata:
+      labels:
+        app: test-app
+    spec:
+      containers:
+      - image: symbiosiscloud/demo-app:0.9
+        imagePullPolicy: Always
+        name: test-app
+        env:
+          - name: NEXT_PUBLIC_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: "REDIS_URL"
+            value: "redis:6379"
+        ports:
+        - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: test-app
+  name: test-app
+  namespace: test-app
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: test-app
+  type: LoadBalancer
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: test-app
+  name: test-app
+  namespace: test-app
+spec:
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: test-app
+  type: LoadBalancer
