@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: minimal-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    dev.okteto.com/generate-host: "true"
 spec:
   ingressClassName: nginx-example
   rules:
